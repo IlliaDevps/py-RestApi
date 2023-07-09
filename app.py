@@ -28,7 +28,9 @@ def create_stores():
     store_id = uuid.uuid4().hex
     if ("name" is not store_data):
         abort(400,"Bad request, ensure 'name' is included in the JSON playload")
-
+    for store in store.value():
+        if(store_data['name']==store['name']):
+            abort (400, message = "Store already exist")
     store = {**store_data, 'id': store_id}
     stores[store_id]=  store #not more a list is a dictionary stores.append(new_store)
     return store, 201
