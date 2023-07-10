@@ -26,9 +26,9 @@ def get_stores():
 def create_stores():
     store_data = request.get_json()
     store_id = uuid.uuid4().hex
-    if ("name" is not store_data):
+    if ("name" not in store_data):
         abort(400,"Bad request, ensure 'name' is included in the JSON playload")
-    for store in store.value():
+    for store in stores.values():
         if(store_data['name']==store['name']):
             abort (400, message = "Store already exist")
     store = {**store_data, 'id': store_id}
@@ -50,11 +50,12 @@ def create_item():
         )
     #check if the item already exist
     for item in items.values():
-        if(item_data['name']== items["name"] and item_data['item_id'] == items['item_id'] ):
+        if(item['name']== item_data["name"] and item['store_id'] == item_data['store_id'] ):
             abort (400, message = f"Item already exist")
 
     if item_data['store_id'] not in stores:
             abort(404, message= 'Store not found')
+            
     item_id = uuid.uuid4().hex
     item = {**item_data, 'id': item_id}
     items[item_id]= item
