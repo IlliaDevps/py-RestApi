@@ -1,45 +1,82 @@
-import json
+# This code sample uses the Confluence RestAPI:
+# Created by Illia Duverkher-Natiahin
+
 import requests
-from requests_oauthlib import OAuth2Session
+from requests.auth import HTTPBasicAuth
+import json
 
-page_id = '560868319'
-
-# Set the Confluence API endpoint and page ID
-api_url = "https://kb.sprc.samsung.pl/rest/api/content/560868319"
-
-# Set the Confluence API token and Content-Type header
-api_token = "4i8c66j5q2o344ercc7kmlrq0u9mofq"
-headers = {
-    "Authorization": f"Bearer {api_token}",
-    "Content-Type": "application/json"
-}
+url = "https://kb.sprc.samsung.pl/rest/api/content/"
+auth = HTTPBasicAuth("<API_USER>", "<API_TOKEN>")
 
 
-# Make a PUT request to update the page
-response = requests.get(api_url, headers=headers, verify=False)
-
-if response.status_code == 200:
-    page_data = response.json()
-    page_content = page_data["body"]["storage"]["value"]
-    print(page_content)
-else:
-    print(f"Failed to retrieve page. Status code: {response.status_code}")
-    print(response.text)
-
-'''oauth = OAuth2Session(client_id=CLIENT_ID, token={'access_token': ACCESS_TOKEN})
-
-def get_page_json(page_id, expand = False):
+def get_page_json(page_id, expand=False):
     if expand:
-        suffix = "?expand=" + expand 
-                              #body.storage
+        suffix = "?expand=" + expand
+        # body.storage or body.view
     else:
         suffix = ""
 
-    confluence_url="https://kb.sprc.samsung.pl/rest/api/content/560868319" #+ page_id + suffix
-    response = oauth.get(confluence_url)
+    url = f"https://kb.sprc.samsung.pl/rest/api/content/{page_id}" + suffix
 
-    #response = requests.get(url, auth=(user, password))
-    #response.encoding = "utf8"
-    return json.loads(response.text)
-    
-print(get_page_json("560868319", "body.storage")) '''
+    headers = {
+        "Accept": "application/json"
+    }
+
+    response = requests.request(
+        "GET",
+        url,
+        headers=headers,
+        auth=auth,
+        verify=False
+    )
+    response.encoding = "utf8"
+    json_data = json.loads(response.text)
+    # json_data = json.dumps(json.loads(response.text),sort_keys=True, indent=4, separators=(",", ": "))
+    # print(json_data['body']['storage']['value'])
+
+    return json_data  # ['body']['storage']['value']
+
+
+print(get_page_json("563617140", 'body.storage'))  # Iza page_id is 560881462
+
+
+def get_and_set(page_id):
+    json_data = get_page_json(page_id)
+
+    new_json_data = dict()
+    new_json_data['id'] = json_data['id']
+    new_json_data['type'] = json_data['type']
+    new_json_data['title'] = json_data['title']
+    new_json_data['type'] = json_data['type']
+    new_json_data['version'] = {"number": json_data['version']['number'] + 1}
+    if not 'key' in json_data:
+        new_json_data['key'] = json_data['space']['key']
+    else:
+        new_json_data['key'] = json_data['key']
+
+    new_json_data['body'] = {'storage': {
+        'value': '<p>the info you see here was created with Python using confluence Rest-API</p>' +
+        '<p><table><tr><th>head1</th><th>head2</th></tr><tr><td>value1</td><td>value2</td></tr><tr><td>value3</td><td>value4</td></tr></table></p>', 'representation': 'storage'}}
+    print(set_page_json(page_id, new_json_data))
+
+
+def set_page_json(page_id, json_content):
+    url = f"https://kb.sprc.samsung.pl/rest/api/content/{page_id}"
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.request(
+        "PUT",
+        url,
+        data=json.dumps(json_content),
+        headers=headers,
+        auth=auth,
+        verify=False
+    )
+
+    return (response.text)
+
+
+print(get_and_set('563617140'))  # 563617140 confluence testing page

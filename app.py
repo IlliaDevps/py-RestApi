@@ -22,6 +22,13 @@ app = Flask (__name__)
 def get_stores():
     return {'stores':list(stores.values()) }
 
+@app.get("/store/<string:store_id>/")
+def get_specific_store(store_id):
+    try:
+        return stores[store_id],201
+    except KeyError:
+        abort(404, message= 'Store not found')
+
 @app.post("/store")
 def create_stores():
     store_data = request.get_json()
@@ -35,9 +42,24 @@ def create_stores():
     stores[store_id]=  store #not more a list is a dictionary stores.append(new_store)
     return store, 201
 
+@app.delete('/store/<string:store_id>')
+def delete_item(store_id):
+    try:
+        del stores[store_id]
+        return {"message": "Store deleted"}
+    except KeyError:
+        abort(404, message= 'Store not found')
+#---------------------------Items----------------------------------------
 @app.get('/item')
 def get_all_items():
      return {'items':list(items.values())}
+
+@app.get('/item/<string:item_id>')
+def get_item(item_id):
+    try:
+        return items[item_id]
+    except KeyError:
+        abort(404, message= 'item not found')
 
 @app.post('/item')
 def create_item():
@@ -61,21 +83,30 @@ def create_item():
     items[item_id]= item
     return item, 201
 
-
-
-@app.get("/store/<string:store_id>/")
-def get_specific_stores(store_id):
+@app.delete('/item/<string:item_id>')
+def delete_item(item_id):
     try:
-        return stores[store_id],201
+        del items[item_id]
+        return {"message": "Item deleted"}
     except KeyError:
-        abort(404, message= 'Store not found')
+        abort(404, message= 'Item not found')
 
-@app.get('/item/<string:item_id>')
-def get_item(item_id):
+@app.put('/item/<string:item_id>')
+def update_item(item_id):
+    item_data = request.get_json()
+    if ("price" not in item_data or "name" not in item_data ):
+        abort(400, message = "Bad request. Ensure 'price', and 'name' are included in the JSON payload")
     try:
-        return items['item_id']
+        item = items[item_id]
+        item |=item_data #you can also update dictionaries
+        #in this way basically you merge 2 dictionaries 
+
+        return item
     except KeyError:
-        abort(404, message= 'item not found')
+        abort(404, message = "Item not found")
+
+
+
 
 
     
