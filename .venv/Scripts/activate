@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\i.duverkher\Desktop\important\python\py-RestApi\.venv"
+VIRTUAL_ENV="C:\Users\i.duverkher\Desktop\important\py-RestApi\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
