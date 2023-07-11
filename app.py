@@ -36,8 +36,9 @@ def create_app(db_url=None):
 
     db.init_app(app)
     api=Api(app)
+
     with app.app_context():
-         db.create_all
+         db.create_all()
 
     api.register_blueprint(ItemBlueprint)
     api.register_blueprint(StoreBlueprint)

@@ -1,9 +1,10 @@
 from db import db
 
-class ItemModel(db.Model): # this become a mapping betwen a row in a table to a python class or pytho objects
+class ItemModel(db.Model): # this become a mapping betwen a row in a table to a python class or python objects
     __tablename__ = 'items'
+    
     id = db.Column(db.Integer, primary_key= True)
     name = db.Column(db.String(80), unique=True , nullable =False)
-    price = db.Column(db.Float(precision=2), unique=True , nullable =False)
-    store_id = db.Column(db.Integer, db.ForeignKey('stores.id') ,unique=True , nullable =False ) #db.ForeingKey maps the items to the store in a 1 to many relation
+    price = db.Column(db.Float(precision=2), unique=False , nullable =False)
+    store_id = db.Column(db.Integer, db.ForeignKey('stores.id') ,unique=False , nullable =False ) #db.ForeingKey maps the items to the store in a 1 to many relation
     store = db.relationship("StoreModel", back_populates = 'items')
