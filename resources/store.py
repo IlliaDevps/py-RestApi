@@ -25,7 +25,10 @@ class Store(MethodView):
     
     def delete(self, store_id):
             store = StoreModel.query.get_or_404(store_id)
-            raise NotImplementedError("Deleting a store is not implemented")
+            db.session.delete(store)  #effectively delete a store from DB
+            db.session.commit()
+            return {'message': 'Store deleted'}
+            # raise NotImplementedError("Deleting a store is not implemented")
             '''try:
                 del stores[store_id]
                 return {"message": "Store deleted"}
@@ -36,7 +39,8 @@ class Store(MethodView):
 class StoreList(MethodView):
      @blp.response(200,  StoreSchema(many=True))
      def get(self):
-          return stores.values()
+           return StoreModel.query.all()
+          #return stores.values()
      @blp.arguments(StoreSchema)
      @blp.response(201,  StoreSchema)
      def post(self, store_data):

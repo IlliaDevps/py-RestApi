@@ -24,7 +24,9 @@ class Item(MethodView):
             abort(404, message= 'item not found')''' 
     def delete(seld, item_id):
        item = ItemModel.query.get_or_404(item_id)
-       raise NotImplementedError("Deleting an item is not implemented")
+       db.session.delete(item)
+       db.session.commit()
+       return {'message': 'Item deleted.'}, 200
        ''' try:
             del items[item_id]
             return {"message": "Item deleted"}
@@ -58,7 +60,8 @@ class Item(MethodView):
 class ItemList(MethodView):
     @blp.response(200, ItemSchema(many=True)) # response a list of items
     def get(self):
-        return items.values()  # when you add the decorator @blp.response(200, ItemSchema(many=True)) you will return a list of items and not an object of items
+        return ItemModel.query.all()
+        #return items.values()  # when you add the decorator @blp.response(200, ItemSchema(many=True)) you will return a list of items and not an object of items
     @blp.arguments(ItemSchema) # automatically check the JSON sent via post and validates
     @blp.response(201, ItemSchema)  # this make send a response with status to clients ussing the rest API
     def post(self, item_data):
