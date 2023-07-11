@@ -5,4 +5,5 @@ class StoreModel(db.Model): # this become a mapping betwen a row in a table to a
 
     id = db.Column(db.Integer, primary_key= True)
     name = db.Column(db.String(80), unique=True , nullable =False)
-    items = db.relationship('ItemModel', back_populates= 'store' , lazy='dynamic', cascade= 'all, delete')
+    items = db.relationship('ItemModel', back_populates= 'store' , lazy='dynamic', cascade= 'all, delete') #lazy = 'dynamic' the more relation you have the heavyer the models become
+    tags =db.relationship('TagModel',  back_populates="store", lazy='dynamic' ) 
