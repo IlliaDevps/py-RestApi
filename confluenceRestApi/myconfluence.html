@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChartJS QA Queue</title>
+  <style>
+        h1 {
+        color: rgb(192, 192, 236);
+        font-size: 24px;
+        font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="ConfluenceRestAPI">
+    <h1>This HTML Macro was created Using Confluence-RestAPi </h1>
+  </div>
+
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script type="text/javascript">
+    
+    let loading = true;
+    document.addEventListener("DOMContentLoaded", async () => {
+      await run("https://wawsrvdev43/api/verification/testing/test", "QA");
+      //await run("/dataTests");
+    });
+
+    const run = async (link, el) => {
+      const ctx = document.getElementById('myChart');
+      try {
+        const response = await fetch(link);
+        const data = await response.json();
+        console.log(data); 
+        
+        const counts = {};
+        for (const key in data) {
+        const app = data[key];
+        const testerNm = app.TESTER_NM;
+        counts[testerNm] = counts[testerNm] ? counts[testerNm] + 1 : 1;
+        } 
+
+        var key = Object.keys(counts)
+        var values = key.map(function (key) {
+            return counts[key]
+        });
+
+        console.log(key); 
+        console.log(values); 
+
+        new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+                labels: key,
+                datasets: [{
+                    label: 'ChartJS: Apps on testing status from the collection verification_tests',
+                    data: values,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+  </script>
+</body>
+</html>    
