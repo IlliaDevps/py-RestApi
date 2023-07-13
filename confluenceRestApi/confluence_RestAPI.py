@@ -1,7 +1,6 @@
 # This code sample uses the Confluence RestAPI:
 # Created by Illia Duverkher-Natiahin
 
-import re
 import requests
 from requests.auth import HTTPBasicAuth
 import urllib3
