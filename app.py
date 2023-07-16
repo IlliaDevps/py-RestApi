@@ -5,6 +5,7 @@ from datetime import datetime
 from flask import Flask, jsonify
 from flask_smorest import Api
 from flask_jwt_extended import JWTManager
+from blocklist import BLOCKLIST
 
 from db import db
 import models
@@ -44,6 +45,31 @@ def create_app(db_url=None):
 
     app.config['JWT_SECRET_KEY'] = '241792312309107685658846800634664924401'
     jwt = JWTManager(app)
+
+    @jwt.token_in_blocklist_loader #when ever we receive a WJT this functions runs and checks if the tocken is in the blocklist
+    def check_if_token_in_blocklist(jtw_header, jtw_payload):
+        return jtw_payload['jti'] in BLOCKLIST #if this retruns true then the request will be terminated and the user get an error which says the token has been revoked
+    
+    @jwt.revoked_token_loader
+    def revoked_token_callback(jtw_header, jtw_payload):
+        return (jsonify(
+            {
+                'description': 'The token has been revoked',
+                'error': 'Token_revoked'
+            }
+        ),401,
+        )
+    
+    @jwt.needs_fresh_token_loader
+    def token_non_fresh_callback(jtw_header, jtw_payload):
+         return (jsonify(
+            {
+                'description': 'The token is not fresh',
+                'error': 'fresh_token_requiered'
+            }
+        ),401,
+        )  
+
 
     @jwt.additional_claims_loader
     def add_claims_to_jwt(identity):

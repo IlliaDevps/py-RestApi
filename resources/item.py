@@ -16,6 +16,7 @@ blp = Blueprint('Items', __name__, description = 'Operations with items')
 @blp.route('/item/<string:item_id>')
 class Item(MethodView):
     @blp.response(200, ItemSchema)
+    @jwt_required()
     def get(self, item_id):
         item = ItemModel.query.get_or_404(item_id)
         return item
@@ -39,6 +40,7 @@ class Item(MethodView):
             abort(404, message= 'Item not found')   '''
     @blp.arguments(ItemUpdateSchema) # automatically check the JSON sent via put and validates 
     @blp.response(200, ItemSchema)
+    @jwt_required()
     def put(self,item_data, item_id):  #and argument decorator foes inform of a root argument, always !!
         item = ItemModel.query.get(item_id)
         if item:
@@ -63,12 +65,13 @@ class Item(MethodView):
 
 @blp.route('/item')
 class ItemList(MethodView):
+    @jwt_required()
     @blp.response(200, ItemSchema(many=True)) # response a list of items
     def get(self):
         return ItemModel.query.all()
         #return items.values()  # when you add the decorator @blp.response(200, ItemSchema(many=True)) you will return a list of items and not an object of items
    
-    @jwt_required()  # you can not call the endpoint unless you send a WJT
+    @jwt_required(fresh=True)  # you can not call the endpoint unless you send a WJT
     @blp.arguments(ItemSchema) # automatically check the JSON sent via post and validates
     @blp.response(201, ItemSchema)  # this make send a response with status to clients ussing the rest API
     def post(self, item_data):
