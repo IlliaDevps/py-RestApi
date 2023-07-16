@@ -11,3 +11,8 @@ docker run -dp 5000:5000 flask-smorest-api
 better to create a volume to not update the docde and re run the app
 Linux docker run -dp 5005:5000 -w /app -v "$(pwd):/app" flask-smorest-api
 Basically this is a maping within directories betwen your local file system and the container file system
+
+To interact with alembic we use
+flask db init
+flask db migrate
+flask db upgrade

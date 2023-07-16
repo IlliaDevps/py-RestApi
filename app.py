@@ -5,6 +5,7 @@ from datetime import datetime
 from flask import Flask, jsonify
 from flask_smorest import Api
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
 from blocklist import BLOCKLIST
 
 from db import db
@@ -41,6 +42,7 @@ def create_app(db_url=None):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
+    migrate = Migrate(app , db)
     api=Api(app)
 
     app.config['JWT_SECRET_KEY'] = '241792312309107685658846800634664924401'
@@ -103,8 +105,8 @@ def create_app(db_url=None):
 
     
 
-    with app.app_context():
-         db.create_all()
+   # with app.app_context(): Since we will use Flask-Migrate to create our database tables, we no longer need AQLAlchemy to do it
+   #      db.create_all()
 
     api.register_blueprint(ItemBlueprint)
     api.register_blueprint(StoreBlueprint)
