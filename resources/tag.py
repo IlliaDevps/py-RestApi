@@ -8,7 +8,7 @@ from schemas import TagSchema,TagAndItemSchema
 
 blp = Blueprint('Tags', 'tags' , description = 'Operations on tags')
 
-@blp.route('/store/<string:store_id>/tag')
+@blp.route('/store/<int:store_id>/tag')
 class TagsInStore(MethodView):
     @blp.response(200, TagSchema(many=True))
     def get(self, store_id):
@@ -31,7 +31,7 @@ class TagsInStore(MethodView):
         return tag  
 
         
-@blp.route("/item/<string:item_id>/tag/<string:tag_id>")
+@blp.route("/item/<int:item_id>/tag/<int:tag_id>")
 class LinkTagsToItem(MethodView):
     @blp.response(200, TagSchema)
     def post(self,item_id, tag_id):
@@ -44,6 +44,8 @@ class LinkTagsToItem(MethodView):
             db.session.commit()
         except SQLAlchemyError:
             abort(500, message = 'An error occurred while inserting a tag.')
+        
+        
 
 
     @blp.response(200, TagAndItemSchema)

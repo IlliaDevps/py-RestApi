@@ -3,6 +3,7 @@ from flask import request
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from sqlalchemy.exc import SQLAlchemyError
+from flask_jwt_extended import jwt_required, get_jwt
 
 from db import db
 from models import ItemModel
@@ -22,7 +23,11 @@ class Item(MethodView):
             return items[item_id]
         except KeyError:
             abort(404, message= 'item not found')''' 
+    @jwt_required()
     def delete(seld, item_id):
+       jwt =get_jwt()
+       if not jwt.get('is_admin'):
+           abort (401, message = 'Admin privilege requiered')
        item = ItemModel.query.get_or_404(item_id)
        db.session.delete(item)
        db.session.commit()
@@ -34,7 +39,7 @@ class Item(MethodView):
             abort(404, message= 'Item not found')   '''
     @blp.arguments(ItemUpdateSchema) # automatically check the JSON sent via put and validates 
     @blp.response(200, ItemSchema)
-    def put(self,item_data, item_id):  #and argument decorator foes infrom of a root argument, always !!
+    def put(self,item_data, item_id):  #and argument decorator foes inform of a root argument, always !!
         item = ItemModel.query.get(item_id)
         if item:
             item.price = item_data['price']
@@ -62,6 +67,8 @@ class ItemList(MethodView):
     def get(self):
         return ItemModel.query.all()
         #return items.values()  # when you add the decorator @blp.response(200, ItemSchema(many=True)) you will return a list of items and not an object of items
+   
+    @jwt_required()  # you can not call the endpoint unless you send a WJT
     @blp.arguments(ItemSchema) # automatically check the JSON sent via post and validates
     @blp.response(201, ItemSchema)  # this make send a response with status to clients ussing the rest API
     def post(self, item_data):
