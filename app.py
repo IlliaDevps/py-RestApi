@@ -7,6 +7,7 @@ from flask_smorest import Api
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from blocklist import BLOCKLIST
+from dotenv import load_dotenv
 
 from db import db
 import models
@@ -29,6 +30,7 @@ with open ('logs.txt', 'a') as file:
 
 def create_app(db_url=None):
     app = Flask (__name__)
+    load_dotenv() #loading env variable from the file .env
 
     app.config['PROPAGATE_EXCEPTIONS'] = True
     app.config['API_TITLE'] = "stores REST API"
