@@ -16,3 +16,5 @@ To interact with alembic we use
 flask db init
 flask db migrate
 flask db upgrade
+
+
