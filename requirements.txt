@@ -9,3 +9,5 @@ passlib
 flask-migrate
 gunicorn
 psycopg2
+rq
+redis
