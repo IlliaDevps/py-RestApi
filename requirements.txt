@@ -7,3 +7,5 @@ flask_sqlalchemy
 flask-jwt-extended # to get 
 passlib
 flask-migrate
+gunicorn
+psycopg2

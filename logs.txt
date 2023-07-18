@@ -7,8 +7,37 @@ date 17:07:23: time : 01:01:30 Running and Logged!
 date 17:07:23: time : 01:02:38 Running and Logged!
 date 17:07:23: time : 01:06:54 Running and Logged!
 date 17:07:23: time : 01:06:56 Running and Logged!
+<<<<<<< HEAD
 date 17:07:23: time : 09:34:42 Running and Logged!
 date 17:07:23: time : 09:37:15 Running and Logged!
 date 17:07:23: time : 09:37:46 Running and Logged!
 date 17:07:23: time : 09:37:48 Running and Logged!
 date 17:07:23: time : 09:38:20 Running and Logged!
+=======
+date 17:07:23: time : 15:50:15 Running and Logged!
+date 17:07:23: time : 15:50:31 Running and Logged!
+date 17:07:23: time : 15:50:32 Running and Logged!
+date 17:07:23: time : 17:22:34 Running and Logged!
+date 17:07:23: time : 17:29:11 Running and Logged!
+date 17:07:23: time : 17:30:23 Running and Logged!
+date 17:07:23: time : 17:31:27 Running and Logged!
+date 17:07:23: time : 17:31:32 Running and Logged!
+date 17:07:23: time : 17:34:54 Running and Logged!
+date 17:07:23: time : 17:35:00 Running and Logged!
+date 17:07:23: time : 17:38:45 Running and Logged!
+date 17:07:23: time : 17:38:52 Running and Logged!
+date 17:07:23: time : 17:59:50 Running and Logged!
+date 17:07:23: time : 17:59:59 Running and Logged!
+date 17:07:23: time : 18:00:41 Running and Logged!
+date 17:07:23: time : 18:00:47 Running and Logged!
+date 17:07:23: time : 18:01:22 Running and Logged!
+date 17:07:23: time : 18:01:27 Running and Logged!
+date 17:07:23: time : 18:01:37 Running and Logged!
+date 17:07:23: time : 18:01:53 Running and Logged!
+date 17:07:23: time : 18:02:10 Running and Logged!
+date 17:07:23: time : 18:02:23 Running and Logged!
+date 17:07:23: time : 18:02:36 Running and Logged!
+date 17:07:23: time : 18:05:45 Running and Logged!
+date 17:07:23: time : 18:05:54 Running and Logged!
+date 17:07:23: time : 18:07:00 Running and Logged!
+>>>>>>> d165b96abf5bce3ac091bc5d23af984db8fc6957
