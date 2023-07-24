@@ -1,0 +1,20 @@
+The Gitflow model consists of two main branches, "develop" and "master," along with several supporting branch types, each serving a specific purpose:
+
+Main Branches:
+a. Master: The "master" branch represents the stable and production-ready code. It should always contain the latest released version of the software.
+b. Develop: The "develop" branch serves as the integration branch for ongoing development work. It contains code that is currently being developed and tested.
+
+Supporting Branches:
+a. Feature Branches: Feature branches are created for developing new features or implementing specific tasks. Each feature is developed in its own branch, branched off from the "develop" branch. Once the feature is complete, it is merged back into the "develop" branch.
+b. Release Branches: Release branches are created when the development team is preparing for a new release. The release branch is branched off from the "develop" branch and is used to stabilize the code for the upcoming release. Only bug fixes and minor adjustments should be made in the release branch.
+c. Hotfix Branches: Hotfix branches are used to quickly address critical issues or bugs in the production code. They are branched off from the "master" branch, and once the hotfix is complete, it is merged into both "master" and "develop" branches.
+
+The typical workflow in Gitflow follows these steps:
+
+Start a new feature: Create a feature branch from the "develop" branch.
+Develop the feature: Work on the feature branch, committing and pushing changes as necessary.
+Merge the feature: Once the feature is complete, merge it back into the "develop" branch.
+Prepare for a release: Create a release branch from the "develop" branch when the code is ready for release.
+Stabilize the release: Perform testing and bug fixes in the release branch until it is ready for deployment.
+Finish the release: Merge the release branch into both "master" and "develop" branches, and tag the release in "master."
+Handle hotfixes: If critical issues arise in production, create a hotfix branch from the "master" branch, fix the issue, and merge it back into "master" and "develop" branches.
