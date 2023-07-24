@@ -1,5 +1,11 @@
 Semantic Versioning (SemVer) tags:
 
+MAJOR.MINOR.PATCH.
+
+MAJOR: Increment when you make incompatible API changes.
+MINOR: Increment when you add new features in a backward-compatible manner.
+PATCH: Increment for backward-compatible bug fixes.
+
 Major Version Changes:
 
 v1.0.0: Initial stable release with a complete API and functionality.
