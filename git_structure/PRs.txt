@@ -1,0 +1,23 @@
+Handling pull requests is a crucial aspect of the development workflow in a collaborative project. Pull requests (PRs) are typically used in version control systems like Git to propose changes made in a feature branch and request that those changes be merged into the main branch (e.g., "master" or "main"). Here are some guidelines on how to handle pull requests effectively:
+
+Create a Feature Branch: Contributors should create a new branch from the latest version of the main branch before making any changes. The branch name should be descriptive and indicate the purpose of the changes.
+
+Make Changes and Commits: Contributors work on their feature branch, making code changes and committing them regularly with clear and concise commit messages. Each commit should represent a logical unit of work.
+
+Write Descriptive Pull Request Titles and Descriptions: When the changes are ready for review, the contributor creates a pull request. The pull request title and description should be descriptive and provide context about the changes, explaining why the changes are necessary and how they address any issues or feature requests.
+
+Reviewers Assigned: The pull request should be assigned to one or more reviewers who will review the code changes. Reviewers can be other developers, team leads, or project maintainers with expertise in the relevant area.
+
+Code Review: Reviewers thoroughly inspect the changes in the pull request. They provide feedback, suggest improvements, and ensure that the code adheres to the project's coding standards and guidelines.
+
+Iterative Improvements: Based on feedback from reviewers, the contributor may make additional commits and updates to address the review comments. The pull request will be automatically updated with these new changes.
+
+Automated Testing: Automated tests should be run on the pull request to ensure that the changes didn't introduce any new bugs and that existing functionality still works as expected.
+
+Merge After Approval: Once the pull request has received the necessary approvals and meets all the requirements, it can be merged into the main branch. Most projects require a minimum number of approvals before merging.
+
+Squash and Merge (Optional): Some projects prefer to use the "squash and merge" option when merging pull requests. This option condenses all the commits from the pull request into a single commit on the main branch, keeping the commit history cleaner.
+
+Delete Feature Branch: After the pull request is merged, the feature branch can be safely deleted to keep the repository tidy.
+
+Closing the Pull Request: The pull request is closed once it's merged, indicating that the changes have been successfully incorporated into the main branch.
